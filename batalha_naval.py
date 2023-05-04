@@ -10,7 +10,6 @@ def define_posicoes(linha, coluna, orientacao, tamanho):
 
 
 def preenche_frota(frota, nome_navio, linha, coluna, orientacao, tamanho):
-
     posicoes = define_posicoes(linha, coluna, orientacao, tamanho)
     if nome_navio in frota:
         frota[nome_navio].append(posicoes)
@@ -67,3 +66,53 @@ def posicao_valida(frota, linha, coluna, orientacao, tamanho):
                 if posicao in posicoes_navio:
                     return False
     return True
+
+
+frota = {
+    "porta-aviões": [],
+    "navio-tanque": [],
+    "contratorpedeiro": [],
+    "submarino": [],
+}
+
+
+embarcacoes = {
+    "porta-aviões": 4,
+    "navio-tanque": 3,
+    "contratorpedeiro": 2,
+    "submarino": 1,
+}
+
+qt_embarcacoes = {
+    "porta-aviões": 1,
+    "navio-tanque": 2,
+    "contratorpedeiro": 3,
+    "submarino": 4,
+}
+
+for nome, quantidade in qt_embarcacoes.items():
+    for i in range(quantidade):
+        print(f"Insira as informações referentes ao navio {nome} que possui tamanho {embarcacoes[nome]}")
+        while True:
+            linha = int(input("Linha:"))
+            coluna = int(input("Coluna:"))
+            if nome == "submarino":
+                if posicao_valida(frota, linha, coluna, "vertical", embarcacoes[nome]):
+                    frota[nome].append([[linha, coluna]])
+                    break
+                else:
+                    print("Esta posição não está válida!")
+                    print(f"Insira as informações referentes ao navio {nome} que possui tamanho {embarcacoes[nome]}")
+            else:
+                orientacao = int(input("[1] Vertical [2] Horizontal >"))
+                if orientacao == 1:
+                    orientacao = 'vertical'
+                elif orientacao == 2:
+                    orientacao = 'horizontal'
+                if posicao_valida(frota, linha, coluna, orientacao, embarcacoes[nome]):
+                    frota = preenche_frota(frota, nome, linha, coluna, orientacao, embarcacoes[nome]) 
+                    break
+                else:
+                    print("Esta posição não está válida!")
+                    print(f"Insira as informações referentes ao navio {nome} que possui tamanho {embarcacoes[nome]}")
+print (frota)
