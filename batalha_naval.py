@@ -67,3 +67,9 @@ def posicao_valida(frota, linha, coluna, orientacao, tamanho):
                 if posicao in posicoes_navio:
                     return False
     return True
+
+# Posicionando
+
+# Jogadas do jogador
+
+# Jogadas do oponente
