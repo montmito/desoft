@@ -1,3 +1,4 @@
+import random
 def define_posicoes(linha, coluna, orientacao, tamanho):
     posicoes = []
     if orientacao == "horizontal":
@@ -68,8 +69,6 @@ def posicao_valida(frota, linha, coluna, orientacao, tamanho):
     return True
 
 <<<<<<< HEAD
-# Posicionando
-
 # Jogadas do jogador
 
 # Jogadas do oponente
@@ -122,5 +121,85 @@ for nome, quantidade in qt_embarcacoes.items():
                 else:
                     print("Esta posição não está válida!")
                     print(f"Insira as informações referentes ao navio {nome} que possui tamanho {embarcacoes[nome]}")
-print (frota)
+#print (frota)
 >>>>>>> 34ee08b61c62b8720441e9c91248a831f9771718
+
+frota_oponente = {
+    'porta-aviões': [
+        [[9, 1], [9, 2], [9, 3], [9, 4]]
+    ],
+    'navio-tanque': [
+        [[6, 0], [6, 1], [6, 2]],
+        [[4, 3], [5, 3], [6, 3]]
+    ],
+    'contratorpedeiro': [
+        [[1, 6], [1, 7]],
+        [[0, 5], [1, 5]],
+        [[3, 6], [3, 7]]
+    ],
+    'submarino': [
+        [[2, 7]],
+        [[0, 6]],
+        [[9, 7]],
+        [[7, 6]]
+    ]
+}
+
+def monta_tabuleiros(tabuleiro_jogador, tabuleiro_oponente):
+    texto = ''
+    texto += '   0  1  2  3  4  5  6  7  8  9         0  1  2  3  4  5  6  7  8  9\n'
+    texto += '_______________________________      _______________________________\n'
+
+    for linha in range(len(tabuleiro_jogador)):
+        jogador_info = '  '.join([str(item) for item in tabuleiro_jogador[linha]])
+        oponente_info = '  '.join([info if str(info) in 'X-' else '0' for info in tabuleiro_oponente[linha]])
+        texto += f'{linha}| {jogador_info}|     {linha}| {oponente_info}|\n'
+    return texto
+
+tabuleiro_jogador = posiciona_frota(frota)
+tabuleiro_oponente = posiciona_frota(frota_oponente)
+
+posicao_jo = []
+posicao_op = []
+
+while jogando:
+    print (monta_tabuleiro(tabuleiro_jogador, tabuleior_oponente))
+    linha = int(input("Informe a linha em que deseja atacar (0-9): "))
+    if linha <= 9 and linha >= 0:
+        break
+        print("Linha inválida!")
+        
+    coluna = int(input("Informe a coluna em que deseja atacar (0-9): "))
+    if coluna <= 9 and coluna >= 0:
+        break
+        print("Coluna inválida!")
+    
+    if (linha, coluna) in posicao_jo:
+        print(f"A posição linha {linha} e coluna {coluna} já foi informada anteriormente!")
+        continue
+    posicao_jo.append((linha, coluna))
+    
+    faz_jogada(tabuleiro_oponente, linha, coluna)
+    
+    if afundados(frota_oponente, tabuleiro_oponente) == len(navios):
+        print("Parabéns! Você derrubou todos os navios do seu oponente!")
+        jogando = False
+        
+        
+    if afundados(frota_oponente, tabuleiro_oponente) != len(navios):
+        
+        while True:
+            linha_op = random.randint(0, 9)
+            coluna_op = random.randint(0, 9)
+
+            if (linha_op, coluna_op) not in posicoes_oponente_informadas:
+                break
+
+        posicoes_oponente_informadas.append((linha_oponente, coluna_oponente))
+        print(f"Seu oponente está atacando na linha {linha_op} e coluna {coluna_op}")
+
+        faz_jogada(tabuleiro_jogador, linha_oponente, coluna_oponente)
+
+        if afundados(frota, tabuleiro_jogador) == len(navios):
+            print("Xi! O oponente derrubou toda a sua frota =(")
+            jogando = False
