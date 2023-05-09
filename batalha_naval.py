@@ -163,7 +163,7 @@ posicao_jo = []
 posicao_op = []
 
 while jogando:
-    print (monta_tabuleiro(tabuleiro_jogador, tabuleior_oponente))
+    print (monta_tabuleiro(tabuleiro_jogador, tabuleiro_oponente))
     linha = int(input("Informe a linha em que deseja atacar (0-9): "))
     if linha <= 9 and linha >= 0:
         break
@@ -192,13 +192,13 @@ while jogando:
             linha_op = random.randint(0, 9)
             coluna_op = random.randint(0, 9)
 
-            if (linha_op, coluna_op) not in posicoes_oponente_informadas:
+            if (linha_op, coluna_op) not in posicao_op:
                 break
 
-        posicoes_oponente_informadas.append((linha_oponente, coluna_oponente))
+        posicao_op.append((linha_op, coluna_op))
         print(f"Seu oponente está atacando na linha {linha_op} e coluna {coluna_op}")
 
-        faz_jogada(tabuleiro_jogador, linha_oponente, coluna_oponente)
+        faz_jogada(tabuleiro_jogador, linha_op, coluna_op)
 
         if afundados(frota, tabuleiro_jogador) == len(navios):
             print("Xi! O oponente derrubou toda a sua frota =(")
